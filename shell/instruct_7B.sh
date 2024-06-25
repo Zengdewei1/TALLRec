@@ -1,10 +1,18 @@
 echo $1, $2
 seed=$2
-output_dir=XXX
-base_model=XXX
-train_data=XXX
-val_data=XXX
-instruction_model=XXX
+# output_dir=XXX
+# base_model=XXX
+# train_data=XXX
+# val_data=XXX
+# instruction_model=XXX
+
+output_dir=movie
+base_model=Meta-Llama-3-8B-Instruct
+
+train_data=data/movie/train.json
+val_data=data/movie/valid.json
+instruction_model=alpaca-lora-7B
+
 for lr in 1e-4
 do
     for dropout in 0.05

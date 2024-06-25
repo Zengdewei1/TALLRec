@@ -68,3 +68,39 @@ bash ./shell/evaluate.sh 1 finetuning_with_profile_1_64
 # 更换模型
 llama3
 bash ./shell/instruct_7B.sh 1 1
+参数改为
+```
+output_dir=finetuning_with_profile
+base_model=Meta-Llama-3-8B-Instruct
+
+train_data=data/movie/train.json
+val_data=data/movie/val.json
+instruction_model=alpaca-lora-7B
+```
+报错
+```
+Traceback (most recent call last):
+  File "finetune_rec.py", line 334, in <module>
+    fire.Fire(train)
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/fire/core.py", line 141, in Fire
+    component_trace = _Fire(component, args, parsed_flag_args, context, name)
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/fire/core.py", line 475, in _Fire
+    component, remaining_args = _CallAndUpdateTrace(
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/fire/core.py", line 691, in _CallAndUpdateTrace
+    component = fn(*varargs, **kwargs)
+  File "finetune_rec.py", line 123, in train
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/transformers/models/auto/auto_factory.py", line 471, in from_pretrained
+    return model_class.from_pretrained(
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/transformers/modeling_utils.py", line 2795, in from_pretrained
+    ) = cls._load_pretrained_model(
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/transformers/modeling_utils.py", line 3109, in _load_pretrained_model
+    state_dict = load_state_dict(shard_file)
+  File "/userhome/34/h3619835/miniconda3/envs/graphgpt/lib/python3.8/site-packages/transformers/modeling_utils.py", line 429, in load_state_dict
+    with safe_open(checkpoint_file, framework="pt") as f:
+safetensors_rust.SafetensorError: Error while deserializing header: MetadataIncompleteBuffer
+```
+尝试先跑通generate_profile
+验证文件完整性，shasum -a 256 model-00001-of-00004.safetensors 
+
+

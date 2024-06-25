@@ -1,8 +1,11 @@
 CUDA_ID=$1
 output_dir=$2
 model_path=$(ls -d $output_dir*)
-base_model=XXX
-test_data=XXX
+# base_model=XXX
+# test_data=XXX
+
+base_model=Meta-Llama-3-8B-Instruct
+# test_data=data/movie/test.json
 for path in $model_path
 do
     echo $path
